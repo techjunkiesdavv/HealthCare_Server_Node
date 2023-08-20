@@ -43,6 +43,12 @@ export const addappointment = async (req, res) => {
       if (!doctor) {
         return res.status(404).json({ message: "Doctor not found" });
       }
+      const patient = await Patient.findById(patientId);
+
+      if (!patient) {
+        return res.status(404).json({ message: "Patient not found" });
+      }
+  
   
       // Create the appointment
       const newAppointment = new Appointment({
@@ -53,7 +59,8 @@ export const addappointment = async (req, res) => {
         slot: slotTime,
         tokenNumber: 1,
       });
-  
+      patient.bookedAppointments.push(newAppointment._id);
+
       // Find or create the date entry in doctor's appointmentOrganized
       let dateEntry = doctor.appointmentOrganized.find(
         (dateEntry) => dateEntry.date.getTime() === newAppointment.appointmentDate.getTime()
@@ -89,6 +96,7 @@ export const addappointment = async (req, res) => {
   
       await newAppointment.save();
       await doctor.save();
+      await patient.save();
   
       res.status(200).json({ result: newAppointment });
     } catch (error)
