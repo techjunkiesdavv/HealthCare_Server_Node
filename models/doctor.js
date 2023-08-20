@@ -37,14 +37,26 @@ const doctorSchema = mongoose.Schema({
   timeSlotsPerDay: {
     type: Number, 
   },
+  avgTimePerPatient:{
+    type:Number,
+  },
   slotTimings: {
     type: [String], 
   },
 
-  appointments: [
-    {
-      type: mongoose.Types.ObjectId,
-      ref: 'Appointment', 
+    appointmentOrganized: [
+    {_id:false,
+      date: {
+        type: Date,
+        required: true,
+        
+      },
+      slots: [
+        {_id:false,
+          slotTime: String, // Store the slot's time string (e.g., "09:00 AM - 10:00 AM")
+          appointments: [{ type: mongoose.Types.ObjectId, ref: 'Appointment' }],
+        },
+      ],
     },
   ],
 

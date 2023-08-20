@@ -17,15 +17,14 @@ const appointmentSchema = mongoose.Schema({
     type: Date,
     required: true,
   },
-  startTime: {
-    type: String, 
+  slot: {
+    type: String,
     required: true,
   },
-  endTime: {
-    type: String, 
+  tokenNumber: {
+    type: Number,
     required: true,
   },
- 
 });
 
 const Appointment = mongoose.model('Appointment', appointmentSchema);
