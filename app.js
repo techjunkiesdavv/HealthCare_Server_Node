@@ -3,6 +3,8 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import patientRoutes from './routes/patient.js';
+import doctorRoutes from './routes/doctor.js';
 
 
 const app = express();
@@ -12,8 +14,9 @@ app.use(bodyParser.json({limit: '30mb',extended:true}));
 // CONNECTION_URL=mongodb+srv://utsav2929:utsav2929@cluster0.agsr6z5.mongodb.net/?retryWrites=true&w=majority
 app.use(bodyParser.urlencoded({limit: '30mb',extended:true}));
 app.use(cors());
+app.use('/doctor',doctorRoutes);
 
-
+app.use('/patient',patientRoutes);
 
 
 const PORT =process.env.PORT;
