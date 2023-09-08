@@ -53,7 +53,7 @@ const doctorSchema = mongoose.Schema({
       },
       slots: [
         {_id:false,
-          slotTime: String, // Store the slot's time string (e.g., "09:00 AM - 10:00 AM")
+          slotTime: String, 
           appointments: [{ type: mongoose.Types.ObjectId, ref: 'Appointment' }],
         },
       ],

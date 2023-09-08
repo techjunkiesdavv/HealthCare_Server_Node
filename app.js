@@ -5,6 +5,9 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import patientRoutes from './routes/patient.js';
 import doctorRoutes from './routes/doctor.js';
+import userRoutes from './routes/user.js';
+import healthRoutes from './routes/health.js'
+import mailRoutes from './routes/mail.js'
 
 
 const app = express();
@@ -17,7 +20,9 @@ app.use(cors());
 app.use('/doctor',doctorRoutes);
 
 app.use('/patient',patientRoutes);
-
+app.use('/user',userRoutes);
+app.use('/add',healthRoutes);
+app.use('/send',mailRoutes);
 
 const PORT =process.env.PORT;
 mongoose.connect(process.env.CONNECTION_URL,{useNewUrlParser: true, useUnifiedTopology: true})

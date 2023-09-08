@@ -17,14 +17,24 @@ const patientSchema = mongoose.Schema({
   phone: {
     type: String,
   },
-  // Add a field to store booked appointments
+  videoAppointment: {
+    type: String,
+  },
+  aadharCardNo: {
+    type: String,
+    required: true,
+  },
+  address:{
+    type:String,
+    required:true,
+  },
   bookedAppointments: [
     {
       type: mongoose.Types.ObjectId,
-      ref: 'Appointment', // Reference to the Appointment model
+      ref: 'Appointment', 
     },
   ],
-  // Add more fields as needed for patient information
+
 });
 
 const Patient = mongoose.model('Patient', patientSchema);
