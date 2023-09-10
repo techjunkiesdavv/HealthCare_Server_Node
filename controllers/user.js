@@ -7,17 +7,18 @@ import Hospital from '../models/hospital.js';
 export const signin = async (req, res) => {
     const { email, password } = req.body;
   
+  
     try {
-      const user= await Patient.findOne({ email });
+      var user= await Doctor.findOne({ email });
   
       if (!user) 
-       user = await Doctor.findOne({ email });
+       user = await Hospital.findOne({ email });
 
-    else if(!user)
+     if(!user)
     {
-        user = await Hospital.findOne({email});
+        user = await Patient.findOne({email});
     }
-    else{
+    if(!user){
 
         return res.status(404).json({ message: "User doesn't exist" });
     }
@@ -29,6 +30,8 @@ export const signin = async (req, res) => {
       if (!isPasswordCorrect) 
       return res.status(400).json({ message: "Invalid credentials" });
   
+    
+      
       const token = jwt.sign({ email: user.email, id: user._id },'test', { expiresIn: "1h" });
   
       res.status(200).json({ result:user,  token });
@@ -71,10 +74,11 @@ export const signin = async (req, res) => {
 
              
               });
+              delete newHospital.password
               const token = jwt.sign( { email: newHospital.email, id: newHospital._id },'test', { expiresIn: "1h" } );
         
           
-              res.status(200).json({ message: "hospital registered successfully", newHospital,token });
+              res.status(200).json({ newHospital,token });
             } catch (error) {
               console.error("Error in signup:", error);
               res.status(500).json({ message: "Something went wrong" });
@@ -141,10 +145,11 @@ export const signin = async (req, res) => {
                   slotTimings:selectedSlotTimings,
                   appointments,
                 });
+                delete newDoctor.password
                 const token = jwt.sign( { email: newDoctor.email, id: newDoctor._id },'test', { expiresIn: "1h" } );
         
           
-                res.status(200).json({ message: "hospital registered successfully", newDoctor,token });
+                res.status(200).json({  newDoctor,token });
               } catch (error) {
                 console.error("Error in signup:", error);
                 res.status(500).json({ message: "Something went wrong" });
@@ -169,11 +174,12 @@ export const signin = async (req, res) => {
         const hashedPassword=await bcrypt.hash(password,10);
          
             const result =await Patient.create({email,password:hashedPassword,name:namee,phone, aadharCardNo,address,videoAppointment:''});
-            
+            delete result.password;
+
             const token = jwt.sign( { email: result.email, id: result._id },'test', { expiresIn: "1h" } );
         
           
-            res.status(200).json({ message: "hospital registered successfully", result,token });
+            res.status(200).json({result,token });
 
         
         
