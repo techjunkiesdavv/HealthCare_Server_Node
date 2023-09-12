@@ -139,7 +139,7 @@ const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user:'sih202227@gmail.com', 
-    pass: 'zshymdeffclmbbes',
+    pass: '',
   },
 });
 export const cancelappointment = async (req, res) => {
